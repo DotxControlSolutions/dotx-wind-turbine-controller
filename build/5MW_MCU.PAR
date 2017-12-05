@@ -1,0 +1,225 @@
+* -------------------------------------------------------------------------------------------------- *
+*               file : 5MW_MCU.PAR                                       	                         *
+*         desciption : parameter file                                                                *
+*           software : DotX Wind Turbine Controller Software                                         *
+*            section : Main Controller Unit - Baseline Controller                                    *
+*             author : DotXf  Control Solutions BV                                                     *
+*                      Alkmaar - The Netherlands                                                     *
+*                      www.dotxcontrol.com / info@dotxcontrol.com                                    *
+*            license : Demo                                                                            *
+*            turbine : 5MW NREL                                                                      *
+* -------------------------------------------------------------------------------------------------- *
+
+* -------------------------------------------------------------------------------------------------- *
+* General Settings                                                                                   *
+* -------------------------------------------------------------------------------------------------- *
+
+I  1 -  LogFile                :       1       * [-]     Generate logfile, yes (1) or no (0)         *
+
+D  1 -  GearboxRatio           :       97.00    * [-]     Gearbox Ratio (set to 1 for direct drive)  *
+D  1 -  ToptCoef               :     22747    * [Nm]    Optimal coefficient in variable speed reg.   *
+D  1 R  OmegaMax               :      1173.3    * [rpm]   Maximum generator speed                    *
+D  1 R  OmegaMin               :      200.00    * [rpm]   Minimum generator speed                    *
+D  1 R  OmegaRated             :      1173.3    * [rpm]   Rated generator speed                      *
+D  1 M  PowerRated             :       5.00  * [MW]    Rated power                                   *
+D  1 M  TorqueRated            :        0.0431 * [MNm]   Rated generator torque                      *
+
+D  1 D  CutOffPitchRateMax     :      8.00     * [deg/s] Maximum pitch rate                         *
+D  1 D  CutOffPitchRateMin     :     -8.00     * [deg/s] Minimum pitch rate                         *
+D  1 D  CutOffPitchAngleMax    :      90.00     * [deg]   Maximum pitch angle                          *
+D  1 D  CutOffPitchAngleMin    :     -10.00     * [deg]   Minimum pitch angle                         *
+
+I  1 -  StepResponseMode       :     0         * [-]     Stepresponse (0=off) 1=q0P  2=d0P q, 3=d1P 4=q1P     *
+D  1 D  StepResponseAmplitude  :     1       * [deg]   Amplitude of step (On the pitch angle?)     *
+D  1 -  StepResponseTime       :    50.0       * [s]     Time of step                                *
+D  3 D 	pitchOffset			   : -0.0 0.0 0.0  * -0.3 0 0.3 * 
+
+* -------------------------------------------------------------------------------------------------- *
+* Rotor Speed Controller                                                                             *
+* -------------------------------------------------------------------------------------------------- *
+* Filters on rotor speed for pitch controller *
+* D  1 -  RotSp_Pit_NF1P         :  0.5         [-]          Notch at 1P, damping factor             *
+D  1 -  RotSp_Pit_NF3P         :  0.1           * [-]          Notch at 3P, damping factor            *
+*D  1 -  RotSp_Pit_NF6P         :  0.05           [-]          Notch at 6P, damping factor            *
+*D  1 -  RotSp_Pit_NF9P         :  0.08           [-]          Notch at 9P, damping factor            *
+D  2 -  RotSp_Pit_NF1F         :  0.5  10.3 *[-], [rad/s] Notch, damping factor & frequency      *
+*D  2 -  RotSp_Pit_NF2F         :  0.2 1.55    [-], [rad/s]  notch filtering, damping factor & frequency    Tower  * 
+D  2 -  RotSp_Pit_NF3F         :  0.2   3.7 * [-], [rad/s] , damping factor & frequency    Collective Pitch Mode Notch *                  
+* D  2 -  RotSp_Pit_NF4F         :  0.50   4.00  [-], [rad/s] Notch, damping factor & frequency     *
+D  2 -  RotSp_Pit_LP1F         :  1.80 10.0      *[-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+
+* Filters on rotor speed for torque controller *
+* D  1 -  RotSp_Tor_NF1P         :  0.5          [-]          Notch at 1P, damping factor            *
+D  1 -  RotSp_Tor_NF3P         :  0.10          *[-]          Notch at 3P, damping factor            *
+* D  1 -  RotSp_Tor_NF6P         :  0.10          [-]          Notch at 6P, damping factor            *
+* D  1 -  RotSp_Tor_NF9P         :  0.05          [-]          Notch at 9P, damping factor            *
+D  2 -  RotSp_Tor_NF1F         :  0.4     10.66 *[-], [rad/s] Notch on tower 0.52Hz, damping factor & frequency      *
+* D  2 -  RotSp_Tor_NF2F         :  0.05 25.7359  [-], [rad/s] 4.1Hz notch filtering, damping factor & frequency      *
+D  2 -  RotSp_Tor_NF3F         :  0.50   10.581  *[-], [rad/s] Notch, damping factor & frequency      *
+* D  2 -  RotSp_Tor_NF4F         :  0.50   4.00  [-], [rad/s] Notch, damping factor & frequency      *
+D  2 -  RotSp_Tor_LP1F         :  1.80 40.23* [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+
+
+* Low-pass filters for scheduling purposes *
+D  2 -  RotSp_LPSCHED          :  2.00   2.00 * [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+D  2 -  RotSp_LPFDBCK          :  2.00   12.00 * [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+D  2 -  Power_LPF              :  2.00   12.00 * [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+D  2 -  Pitch_LPF              :  2.00   2.00 * [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+
+* Torque controller - constraints *
+D  1 M  PID_Torq_RateMax       :   10000  * [MNm] Maximum allowable torque increase      What is this?? per what? Units?    *
+D  1 M  PID_Torq_RateMin       :  -10000  * [MNm] Maximum allowable torque decrease                *
+D  1 -  PID_Torq_Min           :      0.00  * Min torque *
+
+* Torque controller - gain schedule on power (table)                                                        First in Matlab you can run out=GetOptStSt, run propRspeedGainSched(turb)*
+I  1 -  PID_Torque_Sched_N     :   3               * [-]        Nr points in schedule                *
+D  3 -  PID_Torque_Schedule    :   0.0   1.0   10.0 * [MW]       Power schedule                       *
+D  3 -  PID_Torque_Kp          :  118446  118446  118446 * [Nms/rad] Torque contrl. proportional gain   218446   Obtained from propRspeed *
+D  3 -  PID_Torque_Ti          :   3.20  3.20   3.20 * [s]        Torque contrl. integral term        3.2        Obtained from propRspeed    *
+D  3 -  PID_Torque_Td          :   0.0   0.0   0.0 * [1/s]      Torque contrl. differential term            Not used *
+
+* Pitch controller - constraints *
+D  1 D  PID_Pitch_Max          : 110.00  * [deg]   Maximum pitch angle                                *
+D  1 D  PID_Pitch_Min          :  -6.00  * [deg]   Minimum pitch angle                                *
+D  1 D  PID_Pitch_RateMax      :   8.00  * [deg/s] Maximum pitch rate                                 *
+D  1 D  PID_Pitch_RateMin      :  -8.00  * [deg/s] Minimum pitch rate                                 *
+
+* Pitch controller - gain schedule on collective pitch (table) Values obtained from Figure 1. *
+I  1 -  PID_Pitch_Sched_N      :   6                                  * [-] Nr points in schedule    *
+D  6 D  PID_Pitch_Schedule     : -10.00 0.00  5.00  10.0  20.00 90.00 * [deg]                        *
+D  6 -  PID_Pitch_Kp           :    1.1  1.1   0.5   0.32  0.36 0.36  * [-] Pitch prop. gain    1.1  1.1   0.5   0.32  0.36 0.36     *
+D  6 -  PID_Pitch_Ti           :   2.2  2.2   2.2    2.2   2.2 2.2 * [s] Pitch int. time    2.2  2.2   2.2    2.2   2.2 2.2      *
+D  6 -  PID_Pitch_Td           :   0.00 0.00  0.00  0.00   0.00  0.00 * [s] Pitch diff. time         *
+
+* Fine pitch schedule on power (table) - Comes from ststOptCurves*
+I  1 -  FinePitch_Sched_N      :  4                             * [-] Number of points in schedule   *
+D  4 M  FinePitch_Schedule     :  0.0  4.33  5.9  10.0  * [MW]  *
+D  4 D  FinePitch_Angle        :   -0.5 -0.5    -0.5 -0.5 * [deg] -0.5 -0.5   2.5   2.5 *
+
+
+* Other constants  *
+I  1 -  ConstantPowerFlag      :  0          * [-] Constant power flag                               *
+D  1 -  SwitchSlopeTorq        :  1000.00  * [-] Slope in switch between torque + pitch      Jan doesnt know what this is? If it can be get rid off.. Smoothing trick  *
+
+* -------------------------------------------------------------------------------------------------- *
+* Drivetrain oscillations damping                                                                    *
+* -------------------------------------------------------------------------------------------------- *
+
+I  1 -  DTDAMPING              :	0			* [-] Drivetrain damping on (1) or off (0)            *
+
+* Filters on rotor speed for drivetrain damping *
+D  2 -  DTrtsp_HP1F             :  2   10.8   *[-], [rad/s] High-Pass, damp (:= 2.0) & frequency  5 *
+*D  1 -  DTrtsp_NF1P            :  0.50          [-]          Notch at 1P, damping factor            *
+*D  1 -  DTrtsp_NF2P            :  0.50          [-]          Notch at 2P, damping factor            *
+D  1 -  DTrtsp_NF3P            :  0.50          *[-]          Notch at 3P, damping factor            *
+*D  1 -  DTrtsp_NF4P            :  0.50          [-]          Notch at 4P, damping factor            *
+*D  1 -  DTrtsp_NF5P            :  0.50          [-]          Notch at 5P, damping factor            *
+*D  1 -  DTrtsp_NF6P            :  0.50          [-]          Notch at 6P, damping factor            *
+*D  1 -  DTrtsp_NF7P            :  0.50          [-]          Notch at 7P, damping factor            *
+*D  1 -  DTrtsp_NF8P            :  0.50          [-]          Notch at 8P, damping factor            *
+*D  1 -  DTrtsp_NF9P            :  0.50          [-]          Notch at 9P, damping factor            *
+*D  2 -  DTrtsp_NF1F            :  0.50   1.00   [-], [rad/s] Notch, damping factor & frequency      *
+*D  2 -  DTrtsp_NF2F            :  0.50   2.00   [-], [rad/s] Notch, damping factor & frequency      *
+*D  2 -  DTrtsp_NF3F            :  0.50   3.00   [-], [rad/s] Notch, damping factor & frequency      *
+*D  2 -  DTrtsp_NF4F            :  0.50   4.00   [-], [rad/s] Notch, damping factor & frequency      *
+*D  2 -  DTrtsp_NF5F            :  0.50   5.00   [-], [rad/s] Notch, damping factor & frequency      *
+*D  2 -  DTrtsp_NF6F            :  0.50   6.00   [-], [rad/s] Notch, damping factor & frequency      *
+D  2 -  DTrtsp_LP1F            :  2.00  10.8   *[-], [rad/s] Low-Pass, damp (:= 2.0) & frequency   25 *
+*D  2 -  DTrtsp_LP2F            :  2.00  15.00   [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+
+* Drivetrain damping controller - constraints *
+D  1 M  PID_DTD_Max            :  10000000000.00       * [MNm] Maximum torque for drivetrain damper          *
+D  1 M  PID_DTD_Min            :  -10000000000.00       * [MNm] Minimum torque for drivetrain damper          *
+D  1 M  PID_DTD_RateMax        :  10000000000.00       * [MNm] Maximum torque rate for drivetrain damper     *
+D  1 M  PID_DTD_RateMin        :  -10000000000.00       * [MNm] Minimum torque rate for drivetrain damper     *
+
+* Drivetrain damping controller - gains *
+D  1 -  PID_DTD_Kp             :    1000000       * [-] Drivetrain damping controller proportional gain *
+D  1 -  PID_DTD_Ki             :     0.0       * [-] Drivetrain damping controller integral gain     *
+D  1 -  PID_DTD_Kd             :    0       * [-] Drivetrain damping controller differential gain *
+
+* -------------------------------------------------------------------------------------------------- *
+* Tower Motion Fore-Aft Damping                                                                      *
+* -------------------------------------------------------------------------------------------------- *
+
+I  1 -  FADAMPING              :	0			* [-] Fore-Aft damping on (1) or off (0)              *
+
+* Low-pass filters of constraints *
+D  2 -  FA_SpdMinLim_LPF       :  2.00   2.00  * [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+D  2 -  FA_SpdMaxLim_LPF       :  2.00   2.00  * [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+
+* Filters on Fore-aft acceleration *
+*D  2 -  FAAcc_HP1F             :  2   0.0032     @ 0.02Hz [-], [rad/s] High-Pass, damp (:= 2.0) & frequency   *
+* D  1 -  FAAcc_NF1P             :  0.50         [-]          Notch at 1P, damping factor     MCUD->FADemPitch_HPF        *
+* D  1 -  FAAcc_NF2P             :  0.50         [-]          Notch at 2P, damping factor            * 
+D  1 -  FAAcc_NF3P             :  0.1          *[-]          Notch at 3P, damping factor            *
+* D  1 -  FAAcc_NF4P             :  0.50         [-]          Notch at 4P, damping factor            *
+* D  1 -  FAAcc_NF5P             :  0.50         [-]          Notch at 5P, damping factor            *
+D  1 -  FAAcc_NF6P             :  0.1       *   [-]          Notch at 6P, damping factor            *
+* D  1 -  FAAcc_NF7P             :  0.50         [-]          Notch at 7P, damping factor            *
+* D  1 -  FAAcc_NF8P             :  0.50         [-]          Notch at 8P, damping factor            *
+*D  1 -  FAAcc_NF9P             :  0.05          [-]          Notch at 9P, damping factor            *
+*D  1 -  FAAcc_NF12P             :  0.05          [-]          Notch at 12P, damping factor            *
+D  2 -  FAAcc_NF1F             :  0.05   11.65  * [-], [rad/s] , damping factor & frequency      *
+D  2 -  FAAcc_NF2F             :  0.05   18.37 * [-], [rad/s] Notch, damping factor & frequency      *
+*D  2 -  FAAcc_LP1F             :  1    0.44   2.5Hz [-], [rad/s] Low-Pass, damp (:= 2.0) & frequency  16.13  *
+D  2 -  FAAcc_LP2F             :  2.00  120.00  *[-], [rad/s] Low-Pass, damp (:= 2.0) & frequency    *
+
+*Filters on the Fore-Aft Demanded Pitch Output *
+* D  2 -  FADemPitch_HPF             :  2   0.001   @ 0.15Hz [-], [rad/s] High-Pass, damp (:= 2.0) & frequency   *
+
+* New Control Algorithm FA *
+* D  1 -  FA_LP             :  0.06       @ 0.15Hz [-], [rad/s] High-Pass, damp (:= 2.0) & frequency   *
+* D  1 -  FA_HP             :  0.06      @ 0.15Hz [-], [rad/s] High-Pass, damp (:= 2.0) & frequency   *
+
+* Amplitude schedule on power (table) *
+I  1 -  FA_Ampl_Sched_N        : 5                        * [-] Number of points in schedule         *
+D  5 M  FA_Ampl_Schedule       : 0.00 0.40 0.45 6.00 8.00 * [MW] power schedule for fore-aft damping *
+D  5 -  FA_Ampl_Amplitude      : 1.00 1.00 1.00 1.00 1.00 * [-] amplitude for fore-aft damping       *
+
+* Fore-aft tower motion damper - gain schedule on pitch angle (table) *
+I  1 -  PID_FAD_Sched_N        : 2            * [-]   Number of points in schedule                   *
+D  2 -  PID_FAD_Schedule       : -0.50  1.60  * [rad] Pitch schedule                                 *
+D  2 -  PID_FAD_Kp             :  0.00   0.00  * [-]   FA damping controller proportional gain  0.04      *
+D  2 -  PID_FAD_Ki             :  0.05  0.05 * [-]   FA damping controller integral gain       0.05     *
+D  2 -  PID_FAD_Kd             :  0     0     * [-]   FA damping controller differential gain        *
+
+* -------------------------------------------------------------------------------------------------- *
+* Yaw Controller                                                                                     *
+* -------------------------------------------------------------------------------------------------- *
+
+I  1 -  YAWCONTROL             :  0            * [-] Yaw Control on (1) or off (0)                   *
+
+* Yaw mode and setpoint *
+I  1 -  Yaw_Mode               :  0            * [-] Yaw-mode = 0                                    *
+D  1 D  Yaw_Setpoint           :  0.0          * [deg] Setpoint for yaw error (typically = 0.0)      *
+
+* Low-pass filter on yaw error *
+D  2 -  YawMot_Err_LPF         :  2.0  1.0     * [-], [rad/s] Low-Pass, damp (:= 2.0) & freq         *
+
+* Fixed yaw rates *
+D  1 -  YawMot_HystFrac        :  0.000000     * [-], hysteresis fraction yaw misalignment deadband  *
+D  1 D  YawMot_ErDB            :  0.000000     * [deg], yaw misalignment deadband                    *
+D  1 D  YawMot_DemYawRateFix   :  0.000000     * [deg/s], fixed demanded yaw rate (4 Pole Motor)     *
+
+* -------------------------------------------------------------------------------------------------- *
+* Settings for pitch-follow controller                                                               *
+* -------------------------------------------------------------------------------------------------- *
+
+I  1 -  PITFOLLOW              : 0                  * [-] Pitch-follow [ on (1) or off (0) ]         *
+
+* Gains and constraints fo pitch-follow controller *
+D  3 -  PitFollowGains         : 0.0 1e-4 0.0       * [-] Gains for pitch-follow controller          *
+D  4 -  PitFollowConstraints   : -1e6 1e6 -1e6 1e6  * [-] Constraints for pitch-follow controller    *
+
+* -------------------------------------------------------------------------------------------------- *
+* Settings for shutdown controller                                                                   *
+* -------------------------------------------------------------------------------------------------- *
+
+* Open loop control actions *
+D  1 D  Shutdown_PitchRate     :   6.0         * [deg/s] Pitch rate at shutdown                      *
+D  1 M  Shutdown_TorqueRate    :  -0.2         * [MNm/s] Torque rate at shutdown                     *
+
+* -------------------------------------------------------------------------------------------------- *
+* ---------  end of inputfile -- end of inputfile -- end of inputfile -- end of inputfile ---------- *
+* -------------------------------------------------------------------------------------------------- *

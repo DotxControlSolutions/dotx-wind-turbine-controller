@@ -1,0 +1,67 @@
+* -------------------------------------------------------------------------------------------------- *
+*               file : DEMO_EEC.par                                                                  *
+*         desciption : parameter file                                                                *
+*           software : Extreme Event Controller module                                               *
+*             author : DotX Control Solutions BV                                                     *
+*                      Alkmaar - The Netherlands                                                     *
+*                      www.dotxcontrol.com / info@dotxcontrol.com                                    * 
+* -------------------------------------------------------------------------------------------------- *
+
+
+* -------------------------------------------------------------------------------------------------- *
+* Model Parameters                                                                                   *
+* -------------------------------------------------------------------------------------------------- *
+
+S  1 -  DataDirectory          :     ./../input/data/
+
+D  1 -  RotorRadius            :        63.00 
+D  1 -  AirDensity             :         1.2250  
+D  1 M  TorqueScalingFactor    :        10000
+    
+D  1 -  RotorInertia           :   35563812.00
+D  1 -  GeneratorInertia       :     534.00
+D  1 -  GearboxRatio           :         97.00
+
+D  1 -  LossTorqueProportional :         0.05 
+D  1 -  LossCoulomb            :     1000.00
+D  1 -  LossViscous            :         0.00
+
+D  1 -  TowerStiffness         :   0.00
+D  1 -  TowerDamping           :      0.00
+D  1 -  TowerMass              :    100000.00
+
+
+* -------------------------------------------------------------------------------------------------- *
+* Observer Parameters                                                                                *
+* -------------------------------------------------------------------------------------------------- *
+
+I  1 -  ObsMode                :  0
+I  1 -  IntegrationMethod      :  1
+I  1 -  DetectionMethod        :  1  * 1:eec_glrtfit 0:eec_lsfit *
+
+
+D  2 -  TowerLTW               :   0 0
+
+D  1 -  RotSpdGain1            :   10.00
+D  1 -  RotSpdGain2            :   25.00
+
+D  1 -  BldMomGain             :   0.10
+
+D  1 -  PeriodECG              :   10.0
+
+D  1 -  PeriodEOG01              :   10.0
+D  1 -  PeriodEOG50            :   14.0
+
+D 11 -  WindBinsECG            :  4.0  6.0  8.0 10.0 12.0 14.0 16.0 18.0 20.0 22.0 24.0
+D 11 -  ThresholdECG           : 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 
+D 11 -  WindBinsEOG01          :  4.0  6.0  8.0 10.0 12.0 14.0 16.0 18.0 20.0 22.0 24.0
+D 11 -  ThresholdEOG01         : 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 
+D 11 -  WindBinsEOG50          :  4.0  6.0  8.0 10.0 12.0 14.0 16.0 18.0 20.0 22.0 24.0
+D 11 -  ThresholdEOG50         : 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 1e10 
+ 
+D  2 -  Omg_SCHED              :  2.0  0.5
+D  2 -  Hub_SCHED              :  2.0  0.2
+
+* -------------------------------------------------------------------------------------------------- *
+* ---------  end of inputfile -- end of inputfile -- end of inputfile -- end of inputfile ---------- *
+* -------------------------------------------------------------------------------------------------- *

@@ -1,0 +1,53 @@
+* -------------------------------------------------------------------------------------------------- *
+*               file : 5MW_SUP.PAR                                                                   *
+*         desciption : parameter file                                                                *
+*           software : DotX Wind Turbine Controller Software                                         *
+*            section : Supervisory controller                                                        *
+*             author : DotX Control Solutions BV                                                     *
+*                      Alkmaar - The Netherlands                                                     *
+*                      www.dotxcontrol.com / info@dotxcontrol.com                                    *
+*            license : Demo                                                                          *
+*            turbine : 5MW NREL                                                                      *
+* -------------------------------------------------------------------------------------------------- *
+
+
+* -------------------------------------------------------------------------------------------------- *
+* General settings                                                                                   *
+* -------------------------------------------------------------------------------------------------- *
+
+D  1 -  SettlingTime    : -5.0      * [s] Time constant for SUP_ON trigger                           *
+
+* -------------------------------------------------------------------------------------------------- *
+* State settings                                                                                     *
+* -------------------------------------------------------------------------------------------------- *
+
+*                         STATE#  OFF PP  PPD SD  SDD  SDDGL *
+I  7 -  OFF              :   0     0   1   2   0   0    0        * Supervisory control off           *
+I  7 -  POWERPROD        :   1     0   0   0   1   0    0        * Steady power production           *
+I  7 -  POWERPROD_DNPC   :   2     0   1   0   2   4    3        * Steady power production (by DNPC) *
+I  7 -  SHUTDOWN         :   3     0   0   0   0   0    0        * Fast shutdown (openloop)          *
+I  7 -  SHUTDOWN_DNPC    :   4     0   0   0   1   0    0        * Fast shutdown (by DNPC)           *
+I  7 -  SHUTDOWN_DNPC_GL :   5     0   0   0   1   0    0        * Fast shutdown gridloss (by DNPC)  *
+
+* -------------------------------------------------------------------------------------------------- *
+* Trigger settings                                                                                   *
+* -------------------------------------------------------------------------------------------------- *
+
+*                          ON/OFF TRIG#     OFF PP  PPD SD  SDD SDDGL   *
+I  8 -  SUP_OFF         :  1        0       0   0   0   0   0   0   * Supervis. off trigger (init.)      *
+I  8 -  SUP_ON          :  1        2       1   0   0   0   0   0   * Supervis. on trigger (time based) FOR DNPC: TURN 1 TO 2! *
+I  8 -  OVERSPEED       :  0       11       0   3   4   0   3   3   * Overspeed detected                 *
+I  8 -  OVERPOWER       :  0       12       0   3   4   0   3   3   * Overpower detected                 *
+I  8 -  EXTREMEEVENT    :  0       21       0   3   4   0   0   0   * Extreme event (EEC-module)         *
+I  8 -  GRIDLOSS        :  0       31       0   3   5   0   0   0   * Grid loss                          *
+
+* -------------------------------------------------------------------------------------------------- *
+* Absolute limits                                                                                    *
+* -------------------------------------------------------------------------------------------------- *
+
+D  1 R  OverspeedLimit  : 21.0                                  * [RPM] Overspeed limit              *
+D  1 M  OverpowerLimit  :  5.5                                  * [MW]  Overpower limit              *
+
+* -------------------------------------------------------------------------------------------------- *
+* ---------  end of inputfile -- end of inputfile -- end of inputfile -- end of inputfile ---------- *
+* -------------------------------------------------------------------------------------------------- *

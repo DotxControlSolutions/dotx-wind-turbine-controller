@@ -1,0 +1,7 @@
+*.o
+*.lib
+*.dll
+*.user
+*.project
+.metadata
+*.cproject
