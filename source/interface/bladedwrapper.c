@@ -132,7 +132,7 @@ void __declspec(dllexport) __cdecl DISCON(
 #else
 	pBladedData [ BLD_DemPitchAngleCol     ] = (float) pOutputs [ I_MCU_OUT_DEM_PITCHANGLE1   ];
 	pBladedData [ BLD_DemPitchRateCol      ] = (float) pOutputs [ I_MCU_OUT_DEM_PITCHANGLE1   ];
-	pBladedData [ BLD_DemGridContactor     ] = (float) pOutputs [ I_MCU_OUT_DEM_GRIDCONTACTOR ];
+	pBladedData [ BLD_DemGridContactor     ] = (float) R_(1.0);
 	pBladedData [ BLD_DemGenTorque         ] = (float) pOutputs [ I_MCU_OUT_DEM_GENTORQUE     ];
 	pBladedData [ BLD_DemNacelleYawRate    ] = (float) pOutputs [ I_MCU_OUT_DEM_YAWRATE       ];
 #endif
