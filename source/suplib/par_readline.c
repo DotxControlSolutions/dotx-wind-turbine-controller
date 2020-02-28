@@ -39,7 +39,7 @@ int par_readline_i( FILE * fidInFile, FILE * fidOutFile, int * iData, const char
     // This allows to have any commented lines or blank lines between inputs
     par_findstart( fidInFile, &cType ); 
     // After finding first char, next is expected (Int) (Char) (String)
-    fscanf( fidInFile, "%d %s %s :", &N, &cUnit, cTag );
+    fscanf( fidInFile, "%d %c %s :", &N, &cUnit, cTag );
     // Look if the parsed cTag corresponds to the expected one, if not then mark it as not present,
     // REWIND POSITION and return
     if ( strcmp( cTag, cTagRef ) != 0 ) {
@@ -102,7 +102,7 @@ int par_readline_f( FILE * fidInFile, FILE * fidOutFile, float * fData, const ch
     
     par_findstart( fidInFile, &cType ); 
     
-    fscanf( fidInFile, "%d %s %s :", &N, &cUnit, cTag );
+    fscanf( fidInFile, "%d %c %s :", &N, &cUnit, cTag );
     
     if ( strcmp( cTag, cTagRef ) != 0 ) {
         fprintf( fidOutFile, "*      %s  \t\t * \n", cTagRef );
@@ -162,7 +162,7 @@ int par_readline_d( FILE * fidInFile, FILE * fidOutFile, REAL * dData, const cha
     
     par_findstart( fidInFile, &cType ); 
     
-    fscanf( fidInFile, "%d %s %s :", &N, &cUnit, cTag );
+    fscanf( fidInFile, "%d %c %s :", &N, &cUnit, cTag );
     
     if ( strcmp( cTag, cTagRef ) != 0 ) {
         fprintf( fidOutFile, "*      %s  \t\t * \n", cTagRef );
@@ -221,7 +221,7 @@ int par_readline_s( FILE * fidInFile, FILE * fidOutFile, char * cData, const cha
     
     par_findstart( fidInFile, &cType ); 
     
-    fscanf( fidInFile, "%d %s %s :", &N, &cUnit, cTag );
+    fscanf( fidInFile, "%d %c %s :", &N, &cUnit, cTag );
     
     if ( strcmp( cTag, cTagRef ) != 0 ) {
         fprintf( fidOutFile, "*      %s  \t\t * \n", cTagRef );
@@ -272,7 +272,7 @@ void par_findstart( FILE * fid, char * cType )
 {
 
 	// Reads the first non-blank char as the 'type' of the input on current line (i.e. 'I' or 'D')
-	fscanf( fid, "%s ", cType );
+	fscanf( fid, "%c ", cType );
 	char tmp;
 
 	switch ( *cType ) {
@@ -281,7 +281,7 @@ void par_findstart( FILE * fid, char * cType )
 		tmp = '0';
 
 		while ( tmp != '*' )  // While comment not finished discard chars
-			fscanf( fid, "%c", &tmp );
+			fscanf( fid, "%c ", &tmp );
 
 		par_findstart( fid, cType );
 
